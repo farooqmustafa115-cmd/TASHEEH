@@ -1,0 +1,72 @@
+2026-10-10T23:58:33.064697 Starting local Flask server.
+ * Serving Flask app 'app'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:54321
+Press CTRL+C to quit
+127.0.0.1 - - [10/Oct/2026 23:58:35] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 23:58:35] "GET /logo HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 23:58:35] "GET /logo-watermark HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 23:58:35] "GET /api/issued/last HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 23:58:35] "GET /api/questions HTTP/1.1" 200 -
+127.0.0.1 - - [10/Oct/2026 23:58:35] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [10/Oct/2026 23:58:36] "GET /api/questions HTTP/1.1" 200 -
+2026-10-11T11:52:47.674123 Starting local Flask server.
+2026-10-11T12:00:12.793316 Starting local Flask server.
+2026-10-12T12:02:07.904064 Starting local Flask server.
+2026-10-12T12:35:55.640530 Starting local Flask server.
+2026-10-12T12:36:57.980523 Starting local Flask server.
+2026-10-12T14:38:46.793237 Starting local Flask server.
+2026-10-12T21:11:51.921241 Starting local Flask server.
+2026-10-13T09:13:41.683673 Starting local Flask server.
+2026-10-13T09:47:18.769304 Starting local Flask server.
+2026-10-13T14:11:57.567334 Starting local Flask server.
+2026-10-13T14:40:11.757913 Starting local Flask server.
+2026-10-13T22:08:40.128113 Starting local Flask server.
+2026-10-14T14:29:52.391635 Starting local Flask server.
+2026-10-14T14:30:35.958319 Starting local Flask server.
+2026-10-14T14:56:51.895123 Starting local Flask server.
+2026-10-14T14:57:18.101103 Starting local Flask server.
+2026-10-14T14:58:20.234603 Starting local Flask server.
+2026-10-14T15:38:41.121981 Starting local Flask server.
+ * Serving Flask app 'app'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:54321
+Press CTRL+C to quit
+127.0.0.1 - - [14/Oct/2026 15:38:43] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2026 15:38:43] "GET /logo HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2026 15:38:43] "GET /logo-watermark HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2026 15:38:44] "GET /favicon.ico HTTP/1.1" 404 -
+2026-10-14T15:55:57.947893 Starting local Flask server.
+2026-10-14T16:05:22.916791 Starting local Flask server.
+2026-10-15T00:05:27.784620 Starting local Flask server.
+2026-10-15T00:16:46.167725 Starting local Flask server.
+2026-10-15T00:26:55.994210 Starting local Flask server.
+2026-10-15T00:32:36.815330 Starting local Flask server.
+2026-10-15T00:34:36.612569 Starting local Flask server.
+2026-10-15T00:35:06.606343 Starting local Flask server.
+2026-10-15T00:35:55.894222 Starting local Flask server.
+2026-10-15T11:37:41.975798 Starting local Flask server.
+2026-10-15T12:29:11.369336 Starting local Flask server.
+2026-10-15T18:25:53.047083 Starting local Flask server.
+2026-10-15T18:41:34.565539 Starting local Flask server.
+2026-10-15T20:38:16.854750 Starting local Flask server.
+2026-10-16T20:24:53.685683 Starting local Flask server.
+2026-10-16T21:16:43.350413 Starting local Flask server.
+2026-10-16T21:25:34.184208 Starting local Flask server.
+2026-10-16T21:42:04.957128 Starting local Flask server.
+2026-10-16T23:41:56.442444 Starting local Flask server.
+2026-10-17T09:43:24.570661 Starting local Flask server.
+2026-10-17T10:03:38.715147 Starting local Flask server.
+2026-10-17T11:28:25.174950 Starting local Flask server.
+2026-10-17T11:29:06.686671 Starting local Flask server.
+2026-10-17T11:41:59.892288 Starting local Flask server.
+2026-10-17T14:49:41.761897 Starting local Flask server.
+2026-10-18T08:20:27.643826 Starting local Flask server.
+2026-10-18T11:21:36.654213 Starting local Flask server.
+2026-10-18T11:35:08.621486 Starting local Flask server.
+2026-10-18T11:50:05.440723 Starting local Flask server.
+2026-10-18T11:53:15.577472 Starting local Flask server.
+2026-10-18T11:57:41.837828 Starting local Flask server.
+2026-10-18T12:40:33.031502 Starting local Flask server.

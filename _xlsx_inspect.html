@@ -1,0 +1,30 @@
+<!doctype html>
+<html dir="rtl">
+<head><meta charset="utf-8"><title>فحص أعمدة Excel</title>
+<script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+<input type="file" id="f" accept=".xlsx,.xlsm,.xls" multiple>
+<pre id="out">اختر الملفات...</pre>
+<script>
+document.getElementById('f').addEventListener('change', async function(e) {
+  var out = [];
+  for (var file of e.target.files) {
+    try {
+      var buf = await file.arrayBuffer();
+      var wb = XLSX.read(buf, {type:'array'});
+      for (var name of wb.SheetNames) {
+        var ws = wb.Sheets[name];
+        var rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+        out.push('=== ' + file.name + ' | sheet: ' + name + ' | rows: ' + rows.length);
+        rows.slice(0, 4).forEach(function(r, i) {
+          out.push('row' + i + ': ' + JSON.stringify(r));
+        });
+      }
+    } catch (err) { out.push('ERROR ' + file.name + ': ' + err.message); }
+  }
+  document.getElementById('out').textContent = out.join('\n');
+});
+</script>
+</body>
+</html>

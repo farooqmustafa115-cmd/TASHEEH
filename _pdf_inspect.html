@@ -1,0 +1,65 @@
+<!doctype html>
+<html dir="ltr">
+<head><meta charset="utf-8"><title>فحص قالب PDF</title>
+<script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+</head>
+<body>
+<input type="file" id="f" accept=".pdf">
+<pre id="out" style="font-size:11px">اختر ملف PDF...</pre>
+<canvas id="cv" style="border:1px solid #888"></canvas>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+document.getElementById('f').addEventListener('change', async function(e) {
+  var out = [];
+  try {
+    var buf = await e.target.files[0].arrayBuffer();
+    var pdf = await pdfjsLib.getDocument({data: buf}).promise;
+    out.push('pages: ' + pdf.numPages);
+    for (var p = 1; p <= pdf.numPages; p++) {
+      var page = await pdf.getPage(p);
+      var vp = page.getViewport({scale: 1});
+      out.push('=== page ' + p + ' size: ' + vp.width.toFixed(1) + ' x ' + vp.height.toFixed(1));
+      var tc = await page.getTextContent();
+      tc.items.forEach(function(it) {
+        var x = it.transform[4], y = it.transform[5];
+        var yt = vp.height - y;
+        if (!it.str.trim()) return;
+        if (p === 1 && yt > 165) return;
+        out.push(x.toFixed(1) + '\t' + yt.toFixed(1) + '\t' + it.str);
+      });
+      var ops = await page.getOperatorList();
+      var ctm = [1, 0, 0, 1, 0, 0];
+      var stack = [];
+      function multiply(a, b) {
+        return [
+          a[0]*b[0]+a[2]*b[1], a[1]*b[0]+a[3]*b[1],
+          a[0]*b[2]+a[2]*b[3], a[1]*b[2]+a[3]*b[3],
+          a[0]*b[4]+a[2]*b[5]+a[4], a[1]*b[4]+a[3]*b[5]+a[5]
+        ];
+      }
+      for (var i = 0; i < ops.fnArray.length; i++) {
+        var fn = ops.fnArray[i], args = ops.argsArray[i];
+        if (fn === pdfjsLib.OPS.save) { stack.push(ctm.slice()); }
+        else if (fn === pdfjsLib.OPS.restore) { ctm = stack.pop() || ctm; }
+        else if (fn === pdfjsLib.OPS.transform) { ctm = multiply(ctm, args); }
+        else if (fn === pdfjsLib.OPS.paintImageXObject || fn === pdfjsLib.OPS.paintJpegXObject) {
+          // image paints unit square; corners in PDF space (bottom-left origin)
+          var w = Math.hypot(ctm[0], ctm[1]), h = Math.hypot(ctm[2], ctm[3]);
+          var x = ctm[4], yTop = vp.height - ctm[5] - h;
+          out.push('IMAGE\t' + args[0] + '\tx=' + x.toFixed(1) + '\ty=' + yTop.toFixed(1) + '\tw=' + w.toFixed(1) + '\th=' + h.toFixed(1));
+        }
+      }
+    }
+  } catch (err) { out.push('ERROR: ' + err.message); }
+  document.getElementById('out').textContent = out.join('\n');
+  // render page 2 full at scale 1.5
+  var page2 = await pdf.getPage(2);
+  var vp2 = page2.getViewport({scale: 1.5});
+  var cv = document.getElementById('cv');
+  cv.width = vp2.width; cv.height = vp2.height;
+  var ctx = cv.getContext('2d');
+  await page2.render({canvasContext: ctx, viewport: vp2}).promise;
+});
+</script>
+</body>
+</html>

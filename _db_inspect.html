@@ -1,0 +1,38 @@
+<!doctype html>
+<html dir="ltr">
+<head><meta charset="utf-8"><title>DB inspect</title>
+<script src="https://unpkg.com/sql.js@1.10.3/dist/sql-wasm.js"></script>
+</head>
+<body>
+<input type="file" id="f">
+<pre id="out" style="font-size:12px">pick exam_bank.db</pre>
+<script>
+document.getElementById('f').addEventListener('change', async function(e) {
+  var out = [];
+  try {
+    var SQL = await initSqlJs({locateFile: f => 'https://unpkg.com/sql.js@1.10.3/dist/' + f});
+    var buf = await e.target.files[0].arrayBuffer();
+    var db = new SQL.Database(new Uint8Array(buf));
+    function q(sql) {
+      try {
+        var r = db.exec(sql);
+        if (!r.length) { out.push(sql + '\n  (no rows)'); return; }
+        out.push(sql);
+        out.push('  cols: ' + r[0].columns.join(' | '));
+        r[0].values.slice(0, 30).forEach(v => out.push('  ' + JSON.stringify(v)));
+        if (r[0].values.length > 30) out.push('  ... ' + r[0].values.length + ' rows total');
+      } catch (err) { out.push(sql + '\n  ERROR: ' + err.message); }
+    }
+    q("SELECT sql FROM sqlite_master WHERE type='table' AND name IN ('exam_roster','exam_booklets','exam_issues')");
+    q("SELECT COUNT(*), cohort FROM exam_roster GROUP BY cohort");
+    q("SELECT military_number, student_name, company, platoon, student_sequence, substr(qr_jwt,1,40) FROM exam_roster LIMIT 8");
+    q("SELECT company, COUNT(*) FROM exam_roster GROUP BY company");
+    q("SELECT COUNT(*) FROM exam_roster");
+    q("SELECT id, course, cohort, subject, exam_date FROM exam_issues LIMIT 10");
+    q("SELECT COUNT(*) FROM exam_booklets");
+  } catch (err) { out.push('FATAL: ' + err.message); }
+  document.getElementById('out').textContent = out.join('\n');
+});
+</script>
+</body>
+</html>

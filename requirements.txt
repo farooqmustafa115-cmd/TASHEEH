@@ -1,0 +1,12 @@
+Flask>=3.0.0
+pywebview>=4.0.0
+python-docx>=1.1.0
+openpyxl>=3.1.0
+xlrd>=2.0.1
+qrcode[pil]>=7.4.2
+PyMuPDF>=1.24.0
+opencv-python-headless>=4.10.0
+pytesseract>=0.3.10
+pyzbar>=0.1.9
+pytesseract>=0.3.10
+pyzbar>=0.1.9
